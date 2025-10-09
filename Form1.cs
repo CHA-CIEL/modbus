@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,5 +16,17 @@ namespace modbus
         {
             InitializeComponent();
         }
+        private void buttonConnexion_Click(object sender, EventArgs e)
+        {
+            string ip = textBoxAdresseIP.Text.Trim();
+            if (string.IsNullOrEmpty(ip)) ip = "(vide)";
+            AppendStatus($"Connexion au serveur {ip}");
+        }
+
+        private void AppendStatus(string message)
+        {
+            textBoxStatut.AppendText($"{DateTime.Now:HH:mm:ss} - {message}{Environment.NewLine}");
+        }
+
     }
 }
