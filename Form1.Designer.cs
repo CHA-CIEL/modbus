@@ -1,4 +1,4 @@
-﻿namespace modbus
+namespace modbus
 {
     partial class Form1
     {
@@ -18,58 +18,61 @@
 
         private void InitializeComponent()
         {
-            // Initialisation
             this.labelAdresseIP = new System.Windows.Forms.Label();
             this.textBoxAdresseIP = new System.Windows.Forms.TextBox();
             this.buttonConnexion = new System.Windows.Forms.Button();
             this.buttonDeconnexion = new System.Windows.Forms.Button();
             this.textBoxStatut = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
-
-            // Configuration
+            // 
             // labelAdresseIP
+            // 
             this.labelAdresseIP.AutoSize = true;
             this.labelAdresseIP.Location = new System.Drawing.Point(12, 15);
             this.labelAdresseIP.Name = "labelAdresseIP";
-            this.labelAdresseIP.Size = new System.Drawing.Size(60, 13);
+            this.labelAdresseIP.Size = new System.Drawing.Size(54, 13);
             this.labelAdresseIP.TabIndex = 0;
             this.labelAdresseIP.Text = "Ip serveur";
-
+            // 
             // textBoxAdresseIP
+            // 
             this.textBoxAdresseIP.Location = new System.Drawing.Point(78, 12);
             this.textBoxAdresseIP.Name = "textBoxAdresseIP";
             this.textBoxAdresseIP.Size = new System.Drawing.Size(100, 20);
             this.textBoxAdresseIP.TabIndex = 1;
             this.textBoxAdresseIP.Text = "172.17.50.180";
-
+            // 
             // buttonConnexion
+            // 
             this.buttonConnexion.Location = new System.Drawing.Point(184, 10);
             this.buttonConnexion.Name = "buttonConnexion";
-            this.buttonConnexion.Size = new System.Drawing.Size(75, 23);
             this.buttonConnexion.TabIndex = 2;
             this.buttonConnexion.Text = "Connexion";
             this.buttonConnexion.UseVisualStyleBackColor = true;
             this.buttonConnexion.Click += new System.EventHandler(this.buttonConnexion_Click);
-
+            // 
             // buttonDeconnexion
+            // 
             this.buttonDeconnexion.Location = new System.Drawing.Point(265, 10);
             this.buttonDeconnexion.Name = "buttonDeconnexion";
             this.buttonDeconnexion.Size = new System.Drawing.Size(85, 23);
             this.buttonDeconnexion.TabIndex = 3;
             this.buttonDeconnexion.Text = "Deconnexion";
             this.buttonDeconnexion.UseVisualStyleBackColor = true;
-
+            this.buttonDeconnexion.Click += new System.EventHandler(this.buttonDeconnexion_Click);
+            // 
             // textBoxStatut
-            this.textBoxStatut.Location = new System.Drawing.Point(12, 45);
+            // 
+            this.textBoxStatut.Location = new System.Drawing.Point(356, 12);
             this.textBoxStatut.Multiline = true;
-            this.textBoxStatut.Name = "textBoxStatut";
+
             this.textBoxStatut.ReadOnly = true;
             this.textBoxStatut.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxStatut.Size = new System.Drawing.Size(560, 350);
+            this.textBoxStatut.Size = new System.Drawing.Size(216, 377);
             this.textBoxStatut.TabIndex = 4;
-
-            // Fenêtre
+            // 
             // Form1
+            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(584, 411);
@@ -82,6 +85,7 @@
             this.Text = "Barrière Modbus";
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         #endregion
