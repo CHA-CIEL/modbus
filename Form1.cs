@@ -1,24 +1,17 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Net;
-using System.Net.Sockets;
 
 namespace modbus
 {
     public partial class Form1 : Form
     {
         // Réservation de la socket
-        private Socket socket;
+        private CModbus modbus;
         public Form1()
         {
             InitializeComponent();
+            // Instanciation de l'objet Modbus
+            modbus = new CModbus();
         }
         private void buttonConnexion_Click(object sender, EventArgs e)
         {
@@ -28,28 +21,15 @@ namespace modbus
                 AppendStatus("Adresse IP vide");
                 return;
             }
-            try
+            string res = modbus.Connexion(ip);
+            if (res == "ok")
             {
-                // Instanciation de la socket 
-                socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-
-                // Création de l'IPEndPoint 
-                IPAddress ipAddress = IPAddress.Parse(ip);
-                IPEndPoint endPoint = new IPEndPoint(ipAddress, 502);
-
-                AppendStatus($"Socket prête. EndPoint: {endPoint}");
-                socket.Connect(endPoint);
                 AppendStatus("Connexion ok");
             }
-            catch (SocketException ex)
+            else
             {
-                AppendStatus($"**Exception : Impossible de se connecter au serveur** - {ex.Message}");
-                MessageBox.Show(ex.Message, "Exception Socket", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (Exception ex)
-            {
-                AppendStatus($"**Exception : Impossible de se connecter au serveur** - {ex.Message}");
-                MessageBox.Show(ex.Message, "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                AppendStatus($"**Exception : Impossible de se connecter au serveur** - {res}");
+                MessageBox.Show(res, "Connexion échouée", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -60,29 +40,44 @@ namespace modbus
 
         private void buttonDeconnexion_Click(object sender, EventArgs e)
         {
-            try
+            string res = modbus.Deconnexion();
+            if (res == "ok")
             {
-                if (socket != null)
-                {
-                    if (socket.Connected)
-                    {
-                        socket.Shutdown(SocketShutdown.Both);
-                    }
-                    socket.Close();
-                    socket.Dispose();
-                    socket = null;
-                }
                 AppendStatus("déconnexion réussie");
             }
-            catch (SocketException ex)
+            else
             {
-                AppendStatus($"**Exception : Impossible de se déconnecter** - {ex.Message}");
-                MessageBox.Show(ex.Message, "Exception Socket", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                AppendStatus($"**Exception : Impossible de se déconnecter** - {res}");
+                MessageBox.Show(res, "Déconnexion", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            catch (Exception ex)
+        }
+
+        private void buttonLireTension_Click(object sender, EventArgs e)
+        {
+            try
             {
-                AppendStatus($"**Exception : Impossible de se déconnecter** - {ex.Message}");
-                MessageBox.Show(ex.Message, "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // Utilise la variante avec message en sortie pour récupérer l'erreur sans lever d'exception
+                string res = string.Empty;
+                short mot = modbus.LireUnMot(0x0C87, ref res);
+                if (res == "ok")
+                {
+                    // Convertit le mot (dixièmes de volt) en volts
+                    ushort raw = unchecked((ushort)mot);
+                    double tension = raw / 10.0;
+                    AppendStatus($"Tension lue = {tension:F1} V");
+                }
+                else
+                {
+                    AppendStatus($"Erreur Modbus: {res}");
+                }
+                // Affichage du tableau/hex supprimé pour simplifier au début
+                // AppendStatus(ToHex(...))
+            }
+            catch (Exception)
+            {
+                // Mettre en commentaire l'affichage du message d'exception (consigne)
+                // MessageBox.Show(ex.Message, "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                AppendStatus("Erreur lors de la lecture de la tension");
             }
         }
 

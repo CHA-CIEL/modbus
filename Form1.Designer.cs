@@ -23,6 +23,7 @@ namespace modbus
             this.buttonConnexion = new System.Windows.Forms.Button();
             this.buttonDeconnexion = new System.Windows.Forms.Button();
             this.textBoxStatut = new System.Windows.Forms.TextBox();
+            this.buttonLireTension = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // labelAdresseIP
@@ -46,6 +47,7 @@ namespace modbus
             // 
             this.buttonConnexion.Location = new System.Drawing.Point(184, 10);
             this.buttonConnexion.Name = "buttonConnexion";
+            this.buttonConnexion.Size = new System.Drawing.Size(75, 23);
             this.buttonConnexion.TabIndex = 2;
             this.buttonConnexion.Text = "Connexion";
             this.buttonConnexion.UseVisualStyleBackColor = true;
@@ -65,17 +67,26 @@ namespace modbus
             // 
             this.textBoxStatut.Location = new System.Drawing.Point(356, 12);
             this.textBoxStatut.Multiline = true;
-
+            this.textBoxStatut.Name = "textBoxStatut";
             this.textBoxStatut.ReadOnly = true;
             this.textBoxStatut.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBoxStatut.Size = new System.Drawing.Size(216, 377);
             this.textBoxStatut.TabIndex = 4;
             // 
+            // buttonLireTension
+            // 
+            this.buttonLireTension.Location = new System.Drawing.Point(184, 40);
+            this.buttonLireTension.Name = "buttonLireTension";
+            this.buttonLireTension.Size = new System.Drawing.Size(75, 23);
+            this.buttonLireTension.TabIndex = 5;
+            this.buttonLireTension.Text = "Tension";
+            this.buttonLireTension.UseVisualStyleBackColor = true;
+            this.buttonLireTension.Click += new System.EventHandler(this.buttonLireTension_Click);
+            // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 411);
+            this.ClientSize = new System.Drawing.Size(590, 406);
+            this.Controls.Add(this.buttonLireTension);
             this.Controls.Add(this.textBoxStatut);
             this.Controls.Add(this.buttonDeconnexion);
             this.Controls.Add(this.buttonConnexion);
@@ -96,5 +107,6 @@ namespace modbus
         private System.Windows.Forms.Button buttonConnexion;
         private System.Windows.Forms.Button buttonDeconnexion;
         private System.Windows.Forms.TextBox textBoxStatut;
+        private System.Windows.Forms.Button buttonLireTension;
     }
 }
