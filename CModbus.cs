@@ -87,12 +87,12 @@ namespace modbus
             const byte function = 0x03;
 
             byte[] frameE = new byte[12];
-            frameE[0] = 0x00; // Transaction ID high
-            frameE[1] = 0x00; // Transaction ID low
-            frameE[2] = 0x00; // Protocol ID high
-            frameE[3] = 0x00; // Protocol ID low
-            frameE[4] = 0x00; // Length high
-            frameE[5] = 0x06; // Length low
+            frameE[0] = 0x00; 
+            frameE[1] = 0x00; 
+            frameE[2] = 0x00; 
+            frameE[3] = 0x00; 
+            frameE[4] = 0x00; 
+            frameE[5] = 0x06; 
             frameE[6] = unitId;
             frameE[7] = function;
             frameE[8] = (byte)(startAddress >> 8);
@@ -109,28 +109,13 @@ namespace modbus
             if (frameR[7] != function)
                 throw new Exception($"Code fonction inattendu: {frameR[7]:X2}");
 
-            // Attendu: 2 octets par registre
             byte expectedByteCount = (byte)(quantity * 2);
             if (frameR[8] != expectedByteCount)
                 throw new Exception($"Taille de données inattendue: {frameR[8]}");
 
             return frameR;
         }
-
-        // Lecture générique d'un mot (1 registre) à l'adresse spécifiée
-        // valeur de retour : mot lu (Int16)
-        public short LireUnMot(short adresse)
-        {
-            if (adresse < 0)
-                throw new ArgumentOutOfRangeException(nameof(adresse), "L'adresse doit être positive");
-
-            ushort start = (ushort)adresse;
-            byte[] resp = EnvoieReq(start, 1);
-
-            // Conversion big-endian vers Int16 (conserve le signe)
-            return unchecked((short)((resp[9] << 8) | resp[10]));
-        }
-
+        
         // Variante avec message d'erreur en sortie via 'ref string'
         // strResultat : "ok" si tout va bien, sinon le message d'erreur
         public short LireUnMot(short adresse, ref string strResultat)
@@ -168,6 +153,6 @@ namespace modbus
             int volts = (int)Math.Round(raw / 10.0); // 223 V
             return volts;
         }
-
+      
     }
 }
